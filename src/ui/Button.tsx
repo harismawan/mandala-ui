@@ -4,7 +4,7 @@ import { Spinner } from "./Spinner";
 import s from "./Button.module.css";
 
 export type ButtonVariant = "primary" | "brand" | "default" | "subtle" | "danger" | "link";
-export type ButtonSize = "sm" | "md";
+export type ButtonSize = "sm" | "md" | "lg";
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant;
@@ -42,6 +42,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
 });
 
 // Icon-only button: the label is the accessible name and the tooltip.
+const ICON: Record<ButtonSize, number> = { sm: 16, md: 20, lg: 24 };
 export const IconButton = forwardRef<
   HTMLButtonElement,
   Omit<ButtonProps, "icon" | "children"> & { icon: LucideIcon; label: string; tooltip?: boolean }
@@ -60,7 +61,7 @@ export const IconButton = forwardRef<
       disabled={rest.disabled || rest.loading}
       {...stripButtonProps(rest)}
     >
-      {rest.loading ? <Spinner size={size === "sm" ? 14 : 16} /> : <Icon icon={icon} size={size === "sm" ? 16 : 20} />}
+      {rest.loading ? <Spinner size={ICON[size] - 4} /> : <Icon icon={icon} size={ICON[size]} />}
     </button>
   );
 });
