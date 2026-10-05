@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>
+    .tile { fill: #ef5a22; }
+    .horizon { fill: none; stroke: #00525f; stroke-width: 3.5; stroke-linecap: round; }
+    .peak { fill: none; stroke: #ffffff; stroke-width: 3.75; stroke-linecap: round; stroke-linejoin: round; }
+    @media (prefers-color-scheme: dark) { .tile { fill: #ff8736; } }
+  </style>
+  <rect width="32" height="32" rx="7" class="tile"/>
+  <path d="M4 20.5h24" class="horizon"/>
+  <path d="M7.5 26.5 16 6l8.5 20.5" class="peak"/>
+</svg>

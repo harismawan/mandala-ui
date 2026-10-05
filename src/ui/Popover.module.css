@@ -1,0 +1,28 @@
+.popover {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  max-width: calc(100vw - 16px);
+  max-height: min(80vh, 640px);
+  overflow: auto;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-overlay);
+  color: var(--text);
+  box-shadow: var(--shadow-overlay);
+}
+.popover:popover-open {
+  animation: popover-in var(--fast) var(--ease);
+}
+@keyframes popover-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .popover:popover-open {
+    animation: none;
+  }
+}

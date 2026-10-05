@@ -1,0 +1,35 @@
+.avatar {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  border-radius: 50%;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  color: var(--grey-0);
+  background: var(--teal-700);
+  object-fit: cover;
+  vertical-align: middle;
+  user-select: none;
+}
+.avatar[data-square] {
+  border-radius: 25%;
+}
+.avatar[data-hue="0"] {
+  background: var(--teal-700);
+}
+.avatar[data-hue="1"] {
+  background: var(--orange-700);
+}
+.avatar[data-hue="2"] {
+  background: #2f6f9f;
+}
+.avatar[data-hue="3"] {
+  background: #5a6b2a;
+}
+.avatar[data-hue="4"] {
+  background: #7a4a8c;
+}
+.avatar[data-hue="5"] {
+  background: #8c5a1f;
+}

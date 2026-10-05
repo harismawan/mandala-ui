@@ -1,0 +1,68 @@
+.host {
+  position: fixed;
+  left: var(--space-5);
+  bottom: var(--space-5);
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: min(400px, calc(100vw - 2 * var(--space-5)));
+}
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+  box-shadow: var(--shadow-overlay);
+  animation: toast-in var(--medium) var(--ease);
+}
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    animation: none;
+  }
+}
+.icon {
+  flex: none;
+  margin-top: 1px;
+}
+.toast[data-tone="success"] .icon {
+  color: var(--green-300);
+}
+.toast[data-tone="error"] .icon {
+  color: var(--red-300);
+}
+.toast[data-tone="info"] .icon {
+  color: var(--teal-300);
+}
+.text {
+  flex: 1;
+  min-width: 0;
+}
+.title {
+  font-weight: 600;
+}
+.body {
+  margin-top: 2px;
+  opacity: 0.85;
+}
+.action {
+  margin-top: var(--space-2);
+}
+.toast button {
+  color: inherit;
+  opacity: 0.8;
+}
+.toast button:hover {
+  background: rgb(255 255 255 / 12%);
+  color: inherit;
+  opacity: 1;
+}

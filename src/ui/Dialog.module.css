@@ -1,0 +1,59 @@
+.dialog {
+  width: 520px;
+  min-width: 0;
+  max-width: min(92vw, 800px);
+  max-height: 88vh;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-xl);
+  background: var(--surface-overlay);
+  color: var(--text);
+  box-shadow: var(--shadow-overlay);
+}
+.dialog[data-size="sm"] {
+  width: 420px;
+}
+.dialog[data-size="lg"] {
+  width: 760px;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  max-height: 88vh;
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-6) 0;
+}
+.title {
+  margin: 0;
+  font-size: var(--text-lg);
+  line-height: var(--leading-lg);
+}
+.dialog[data-tone="danger"] .title {
+  color: var(--danger-text);
+}
+.description {
+  margin: var(--space-2) 0 0;
+  padding: 0 var(--space-6);
+  color: var(--text-subtle);
+}
+.body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: var(--space-4) var(--space-6);
+}
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6) var(--space-5);
+}
+.footer:first-child,
+.body + .footer {
+  padding-top: var(--space-2);
+}

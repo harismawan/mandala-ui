@@ -1,0 +1,54 @@
+/* CSS tooltip: any element with data-tooltip shows it on hover/focus after a short delay. Pair with aria-label. */
+[data-tooltip] {
+  position: relative;
+}
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 6px);
+  z-index: 40;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  line-height: 18px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, 2px);
+  transition:
+    opacity var(--fast) var(--ease) 0s,
+    transform var(--fast) var(--ease) 0s;
+}
+[data-tooltip]:hover::after,
+[data-tooltip]:focus-visible::after {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  transition-delay: 400ms;
+}
+[data-tooltip][data-tooltip-side="bottom"]::after {
+  bottom: auto;
+  top: calc(100% + 6px);
+  transform: translate(-50%, -2px);
+}
+[data-tooltip][data-tooltip-side="bottom"]:hover::after,
+[data-tooltip][data-tooltip-side="bottom"]:focus-visible::after {
+  transform: translate(-50%, 0);
+}
+[data-tooltip][data-tooltip-side="right"]::after {
+  left: calc(100% + 6px);
+  bottom: auto;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+[data-tooltip][data-tooltip-side="right"]:hover::after,
+[data-tooltip][data-tooltip-side="right"]:focus-visible::after {
+  transform: translate(0, -50%);
+}
+[data-tooltip][disabled]::after,
+[data-tooltip][aria-expanded="true"]::after {
+  display: none;
+}

@@ -1,0 +1,243 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-base);
+  color: var(--text);
+  background: var(--surface);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "cv11", "ss01";
+}
+h1 {
+  font-size: var(--text-2xl);
+  line-height: var(--leading-2xl);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin: 0 0 var(--space-4);
+}
+h2 {
+  font-size: var(--text-lg);
+  line-height: var(--leading-lg);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--space-3);
+}
+h3 {
+  font-size: var(--text-md);
+  line-height: var(--leading-md);
+  font-weight: 600;
+  margin: 0 0 var(--space-2);
+}
+p {
+  margin: 0 0 var(--space-2);
+}
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+small,
+.meta {
+  font-size: var(--text-sm);
+  line-height: var(--leading-sm);
+  color: var(--text-muted);
+}
+code {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+::selection {
+  background: var(--selection);
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus);
+  border-radius: var(--radius-sm);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+input,
+select,
+textarea {
+  height: var(--control);
+  padding: 0 var(--space-2);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+  transition:
+    border-color var(--fast) var(--ease),
+    box-shadow var(--fast) var(--ease),
+    background-color var(--fast) var(--ease);
+}
+input:hover:not(:focus),
+select:hover:not(:focus),
+textarea:hover:not(:focus) {
+  background: var(--surface-sunken);
+}
+textarea {
+  height: auto;
+  padding: var(--space-2);
+  line-height: var(--leading-base);
+}
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 1px var(--border-focus);
+}
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+}
+input[type="checkbox"],
+input[type="radio"] {
+  height: 16px;
+  width: 16px;
+  margin: 0;
+  padding: 0;
+  accent-color: var(--accent);
+}
+
+/* Unstyled buttons default to the quiet neutral; the ui/Button component covers every other variant. */
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: var(--control);
+  padding: 0 var(--space-3);
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--surface-hover);
+  color: var(--text-subtle);
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--fast) var(--ease),
+    color var(--fast) var(--ease),
+    box-shadow var(--fast) var(--ease);
+}
+button:hover:not(:disabled) {
+  background: var(--surface-pressed);
+  color: var(--text);
+}
+button:active:not(:disabled) {
+  background: var(--accent-subtle);
+  color: var(--accent-text);
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+button[data-variant="primary"] {
+  background: var(--accent);
+  color: var(--text-on-brand);
+}
+button[data-variant="primary"]:hover:not(:disabled) {
+  background: var(--accent-hover);
+  color: var(--text-on-brand);
+}
+button[data-variant="subtle"] {
+  background: transparent;
+}
+button[data-variant="subtle"]:hover:not(:disabled) {
+  background: var(--surface-hover);
+}
+button[data-variant="danger"] {
+  background: var(--danger);
+  color: var(--text-on-brand);
+}
+button[data-variant="danger"]:hover:not(:disabled) {
+  background: var(--danger-hover);
+  color: var(--text-on-brand);
+}
+button[hidden] {
+  display: none;
+}
+
+/* Dense data tables shared by the list pages. */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+th,
+td {
+  height: var(--row);
+  padding: 0 var(--space-3);
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+th {
+  height: 32px;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-muted);
+  border-bottom: 2px solid var(--border);
+}
+tbody tr {
+  transition: background-color var(--fast) var(--ease);
+}
+tbody tr:hover {
+  background: var(--surface-sunken);
+}
+
+dialog {
+  border: 0;
+  border-radius: var(--radius-xl);
+  padding: 0;
+  background: var(--surface-overlay);
+  box-shadow: var(--shadow-overlay);
+  color: var(--text);
+  min-width: 440px;
+  max-width: min(92vw, 800px);
+  max-height: 88vh;
+}
+dialog[open] {
+  animation: dialog-in 160ms var(--ease);
+}
+dialog::backdrop {
+  background: var(--backdrop);
+}
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  dialog[open] {
+    animation: none;
+  }
+}
+
+/* Visible to assistive technology only. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

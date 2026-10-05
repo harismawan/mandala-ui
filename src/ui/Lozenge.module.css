@@ -1,0 +1,57 @@
+.lozenge {
+  display: inline-block;
+  max-width: 200px;
+  overflow: hidden;
+  padding: 0 6px;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  line-height: 18px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  background: var(--lozenge-new-bg);
+  color: var(--lozenge-new-fg);
+}
+.lozenge[data-tone="info"] {
+  background: var(--accent-subtle);
+  color: var(--accent-text);
+}
+.lozenge[data-tone="success"] {
+  background: var(--success-subtle);
+  color: var(--success-text);
+}
+.lozenge[data-tone="warning"] {
+  background: var(--warning-subtle);
+  color: var(--warning-text);
+}
+.lozenge[data-tone="danger"] {
+  background: var(--danger-subtle);
+  color: var(--danger-text);
+}
+.lozenge[data-tone="brand"] {
+  background: var(--brand-subtle);
+  color: var(--brand-text);
+}
+.lozenge[data-bold] {
+  color: var(--text-on-brand);
+}
+.lozenge[data-bold][data-tone="default"] {
+  background: var(--grey-500);
+}
+.lozenge[data-bold][data-tone="info"] {
+  background: var(--accent);
+}
+.lozenge[data-bold][data-tone="success"] {
+  background: var(--success);
+}
+.lozenge[data-bold][data-tone="warning"] {
+  background: var(--warning);
+}
+.lozenge[data-bold][data-tone="danger"] {
+  background: var(--danger);
+}
+.lozenge[data-bold][data-tone="brand"] {
+  background: var(--brand-strong);
+}

@@ -1,0 +1,308 @@
+/*
+ * Atlas design tokens. Primitive scales first (never used directly by components), then the semantic roles
+ * every component reads, then the dark remap. Brand colours come from bni.co.id: teal #006677 carries links
+ * and primary actions (AA on white); orange #ef5a22 is a signal colour only (mark, CTA, badges, underlines),
+ * never body or link text.
+ */
+:root {
+  color-scheme: light dark;
+
+  --font-sans:
+    "Inter Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", Ubuntu, "Helvetica Neue",
+    Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  --text-xs: 11px;
+  --text-sm: 12px;
+  --text-base: 14px;
+  --text-md: 16px;
+  --text-lg: 20px;
+  --text-xl: 24px;
+  --text-2xl: 28px;
+  --leading-xs: 16px;
+  --leading-sm: 16px;
+  --leading-base: 20px;
+  --leading-md: 24px;
+  --leading-lg: 24px;
+  --leading-xl: 28px;
+  --leading-2xl: 32px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  --row: 40px;
+  --control: 32px;
+  --control-sm: 24px;
+  --topbar: 48px;
+  --sidebar: 256px;
+  --rail: 280px;
+  --radius-sm: 4px;
+  --radius: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --fast: 120ms;
+  --medium: 200ms;
+
+  /* Primitive scales. */
+  --teal-50: #e6f4f5;
+  --teal-100: #c2e4e7;
+  --teal-200: #8fd6dc;
+  --teal-300: #5fc3cc;
+  --teal-400: #2a9aa6;
+  --teal-500: #11868f;
+  --teal-600: #007a8a;
+  --teal-700: #006677;
+  --teal-800: #00525f;
+  --teal-900: #00343d;
+
+  --orange-50: #fff0e9;
+  --orange-100: #ffd9c7;
+  --orange-200: #ffb795;
+  --orange-300: #ffa166;
+  --orange-400: #ff8736;
+  --orange-500: #f7701f;
+  --orange-600: #ef5a22;
+  --orange-700: #d14a15;
+  --orange-800: #b23c0e;
+  --orange-900: #7a2708;
+
+  --grey-0: #ffffff;
+  --grey-50: #f7fafa;
+  --grey-100: #f2f7f8;
+  --grey-150: #e9f0f1;
+  --grey-200: #d9e3e5;
+  --grey-300: #b4c4c8;
+  --grey-400: #8aa0a6;
+  --grey-500: #5f7a80;
+  --grey-600: #4d666c;
+  --grey-700: #3f5a60;
+  --grey-800: #22363b;
+  --grey-900: #16282c;
+  --grey-950: #0f1a1d;
+
+  --green-50: #e3f5ec;
+  --green-100: #c3ead6;
+  --green-600: #1f7a4d;
+  --green-700: #17623d;
+  --green-300: #4cc38a;
+  --amber-50: #fff5e0;
+  --amber-100: #ffe7b3;
+  --amber-600: #b26a00;
+  --amber-700: #8f5500;
+  --amber-300: #f0b35a;
+  --red-50: #ffeceb;
+  --red-100: #ffd5d2;
+  --red-600: #c9372c;
+  --red-700: #ae2e24;
+  --red-300: #ff7a6e;
+
+  /* Semantic roles (light). */
+  --surface: var(--grey-0);
+  --surface-raised: var(--grey-0);
+  --surface-sunken: var(--grey-100);
+  --surface-overlay: var(--grey-0);
+  --surface-hover: rgb(0 51 61 / 6%);
+  --surface-pressed: rgb(0 51 61 / 12%);
+  --surface-selected: var(--teal-50);
+  --surface-inverse: var(--grey-900);
+
+  --text: var(--grey-900);
+  --text-subtle: var(--grey-700);
+  --text-muted: var(--grey-500);
+  --text-inverse: var(--grey-0);
+  --text-on-brand: var(--grey-0);
+
+  --border: rgb(0 51 61 / 14%);
+  --border-strong: rgb(0 51 61 / 26%);
+  --border-focus: var(--teal-700);
+
+  --accent: var(--teal-700);
+  --accent-hover: var(--teal-800);
+  --accent-subtle: var(--teal-50);
+  --accent-subtle-hover: var(--teal-100);
+  --accent-text: var(--teal-800);
+
+  --brand: var(--orange-600);
+  --brand-strong: var(--orange-800);
+  --brand-strong-hover: var(--orange-900);
+  --brand-subtle: var(--orange-50);
+  --brand-subtle-hover: var(--orange-100);
+  --brand-text: var(--orange-800);
+
+  --success: var(--green-600);
+  --success-subtle: var(--green-50);
+  --success-text: var(--green-700);
+  --warning: var(--amber-600);
+  --warning-subtle: var(--amber-50);
+  --warning-text: var(--amber-700);
+  --danger: var(--red-600);
+  --danger-hover: var(--red-700);
+  --danger-subtle: var(--red-50);
+  --danger-text: var(--red-700);
+
+  --focus: 0 0 0 2px var(--surface), 0 0 0 4px var(--border-focus);
+  --shadow-raised: 0 1px 2px rgb(0 51 61 / 12%), 0 0 1px rgb(0 51 61 / 24%);
+  --shadow-overlay: 0 8px 24px rgb(0 51 61 / 16%), 0 0 1px rgb(0 51 61 / 28%);
+  --backdrop: rgb(0 38 46 / 55%);
+  --selection: var(--teal-100);
+
+  /* Categorical chart series (gadgets, pies, bars); the same six in both products. */
+  --chart-1: var(--teal-600);
+  --chart-2: var(--orange-600);
+  --chart-3: var(--amber-600);
+  --chart-4: var(--green-600);
+  --chart-5: #6f5bd1;
+  --chart-6: var(--grey-500);
+
+  /* Status category lozenges (Jira-style): new, indeterminate, done. */
+  --lozenge-new-bg: var(--grey-150);
+  --lozenge-new-fg: var(--grey-700);
+  --lozenge-indeterminate-bg: var(--teal-100);
+  --lozenge-indeterminate-fg: var(--teal-900);
+  --lozenge-done-bg: var(--green-100);
+  --lozenge-done-fg: var(--green-700);
+}
+
+/* Dark remap. Applied by the manual toggle, and by the system preference unless light was chosen explicitly. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --surface: #1b2224;
+    --surface-raised: #232c2f;
+    --surface-sunken: #161c1e;
+    --surface-overlay: #2a3437;
+    --surface-hover: rgb(255 255 255 / 6%);
+    --surface-pressed: rgb(255 255 255 / 10%);
+    --surface-selected: #0f3338;
+    --surface-inverse: var(--grey-50);
+
+    --text: #c7d1d4;
+    --text-subtle: #9fb1b6;
+    --text-muted: #8aa0a6;
+    --text-inverse: #1b2224;
+    --text-on-brand: #1b2224;
+
+    --border: rgb(255 255 255 / 12%);
+    --border-strong: rgb(255 255 255 / 22%);
+    --border-focus: var(--teal-300);
+
+    --accent: var(--teal-300);
+    --accent-hover: var(--teal-200);
+    --accent-subtle: #0f3338;
+    --accent-subtle-hover: #144249;
+    --accent-text: var(--teal-200);
+
+    --brand: var(--orange-400);
+    --brand-strong: var(--orange-400);
+    --brand-strong-hover: var(--orange-300);
+    --brand-subtle: #3a2114;
+    --brand-subtle-hover: #4a2a18;
+    --brand-text: var(--orange-300);
+
+    --success: var(--green-300);
+    --success-subtle: #12301f;
+    --success-text: var(--green-300);
+    --warning: var(--amber-300);
+    --warning-subtle: #3a2a0a;
+    --warning-text: var(--amber-300);
+    --danger: var(--red-300);
+    --danger-hover: #ff9a90;
+    --danger-subtle: #3d1a17;
+    --danger-text: var(--red-300);
+
+    --shadow-raised: 0 1px 2px rgb(0 0 0 / 40%), 0 0 1px rgb(0 0 0 / 60%);
+    --shadow-overlay: 0 12px 32px rgb(0 0 0 / 55%), 0 0 1px rgb(0 0 0 / 70%);
+    --backdrop: rgb(0 0 0 / 65%);
+    --selection: #144249;
+
+    --chart-1: var(--teal-300);
+    --chart-2: var(--orange-400);
+    --chart-3: var(--amber-300);
+    --chart-4: var(--green-300);
+    --chart-5: #a394ff;
+    --chart-6: var(--grey-400);
+
+    --chart-1: var(--teal-300);
+    --chart-2: var(--orange-400);
+    --chart-3: var(--amber-300);
+    --chart-4: var(--green-300);
+    --chart-5: #a394ff;
+    --chart-6: var(--grey-400);
+
+    --lozenge-new-bg: #2e3a3e;
+    --lozenge-new-fg: #b6c4c8;
+    --lozenge-indeterminate-bg: #0f3338;
+    --lozenge-indeterminate-fg: var(--teal-200);
+    --lozenge-done-bg: #12301f;
+    --lozenge-done-fg: var(--green-300);
+  }
+}
+:root[data-theme="dark"] {
+  --surface: #1b2224;
+  --surface-raised: #232c2f;
+  --surface-sunken: #161c1e;
+  --surface-overlay: #2a3437;
+  --surface-hover: rgb(255 255 255 / 6%);
+  --surface-pressed: rgb(255 255 255 / 10%);
+  --surface-selected: #0f3338;
+  --surface-inverse: var(--grey-50);
+
+  --text: #c7d1d4;
+  --text-subtle: #9fb1b6;
+  --text-muted: #8aa0a6;
+  --text-inverse: #1b2224;
+  --text-on-brand: #1b2224;
+
+  --border: rgb(255 255 255 / 12%);
+  --border-strong: rgb(255 255 255 / 22%);
+  --border-focus: var(--teal-300);
+
+  --accent: var(--teal-300);
+  --accent-hover: var(--teal-200);
+  --accent-subtle: #0f3338;
+  --accent-subtle-hover: #144249;
+  --accent-text: var(--teal-200);
+
+  --brand: var(--orange-400);
+  --brand-strong: var(--orange-400);
+  --brand-strong-hover: var(--orange-300);
+  --brand-subtle: #3a2114;
+  --brand-subtle-hover: #4a2a18;
+  --brand-text: var(--orange-300);
+
+  --success: var(--green-300);
+  --success-subtle: #12301f;
+  --success-text: var(--green-300);
+  --warning: var(--amber-300);
+  --warning-subtle: #3a2a0a;
+  --warning-text: var(--amber-300);
+  --danger: var(--red-300);
+  --danger-hover: #ff9a90;
+  --danger-subtle: #3d1a17;
+  --danger-text: var(--red-300);
+
+  --shadow-raised: 0 1px 2px rgb(0 0 0 / 40%), 0 0 1px rgb(0 0 0 / 60%);
+  --shadow-overlay: 0 12px 32px rgb(0 0 0 / 55%), 0 0 1px rgb(0 0 0 / 70%);
+  --backdrop: rgb(0 0 0 / 65%);
+  --selection: #144249;
+
+  --lozenge-new-bg: #2e3a3e;
+  --lozenge-new-fg: #b6c4c8;
+  --lozenge-indeterminate-bg: #0f3338;
+  --lozenge-indeterminate-fg: var(--teal-200);
+  --lozenge-done-bg: #12301f;
+  --lozenge-done-fg: var(--green-300);
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}

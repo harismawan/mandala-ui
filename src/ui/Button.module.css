@@ -1,0 +1,110 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: var(--control);
+  padding: 0 var(--space-3);
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--surface-hover);
+  color: var(--text);
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--fast) var(--ease),
+    color var(--fast) var(--ease),
+    box-shadow var(--fast) var(--ease);
+}
+.button[data-size="sm"] {
+  height: var(--control-sm);
+  padding: 0 var(--space-2);
+  font-size: var(--text-sm);
+}
+.iconOnly {
+  width: var(--control);
+  padding: 0;
+}
+.iconOnly[data-size="sm"] {
+  width: var(--control-sm);
+}
+.label {
+  display: inline-block;
+}
+.button:hover:not(:disabled) {
+  background: var(--surface-pressed);
+}
+.button:active:not(:disabled) {
+  background: var(--accent-subtle);
+  color: var(--accent-text);
+}
+.button[aria-pressed="true"] {
+  background: var(--accent-subtle);
+  color: var(--accent-text);
+}
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.button[data-loading] {
+  opacity: 0.8;
+}
+
+.button[data-variant="primary"] {
+  background: var(--accent);
+  color: var(--text-on-brand);
+}
+.button[data-variant="primary"]:hover:not(:disabled),
+.button[data-variant="primary"]:active:not(:disabled) {
+  background: var(--accent-hover);
+  color: var(--text-on-brand);
+}
+
+.button[data-variant="brand"] {
+  background: var(--brand-strong);
+  color: var(--text-on-brand);
+}
+.button[data-variant="brand"]:hover:not(:disabled),
+.button[data-variant="brand"]:active:not(:disabled) {
+  background: var(--brand-strong-hover);
+  color: var(--text-on-brand);
+}
+
+.button[data-variant="subtle"] {
+  background: transparent;
+  color: var(--text-subtle);
+}
+.button[data-variant="subtle"]:hover:not(:disabled) {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+.button[data-variant="subtle"][aria-pressed="true"] {
+  background: var(--accent-subtle);
+  color: var(--accent-text);
+}
+
+.button[data-variant="danger"] {
+  background: var(--danger);
+  color: var(--text-on-brand);
+}
+.button[data-variant="danger"]:hover:not(:disabled),
+.button[data-variant="danger"]:active:not(:disabled) {
+  background: var(--danger-hover);
+  color: var(--text-on-brand);
+}
+
+.button[data-variant="link"] {
+  height: auto;
+  padding: 0;
+  background: transparent;
+  color: var(--accent);
+  font-weight: 500;
+}
+.button[data-variant="link"]:hover:not(:disabled) {
+  background: transparent;
+  color: var(--accent-hover);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}

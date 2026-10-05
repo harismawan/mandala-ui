@@ -1,0 +1,50 @@
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  max-width: 440px;
+  margin: var(--space-10) auto;
+  text-align: center;
+  color: var(--text-subtle);
+}
+.state[data-compact] {
+  margin: var(--space-6) auto;
+}
+.icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  margin-bottom: var(--space-1);
+  border-radius: 50%;
+  background: var(--accent-subtle);
+  color: var(--accent-text);
+}
+.state[data-tone="warning"] .icon {
+  background: var(--warning-subtle);
+  color: var(--warning-text);
+}
+.state[data-tone="danger"] .icon {
+  background: var(--danger-subtle);
+  color: var(--danger-text);
+}
+.state[data-compact] .icon {
+  width: 36px;
+  height: 36px;
+}
+.title {
+  margin: 0;
+  color: var(--text);
+  font-size: var(--text-md);
+  line-height: var(--leading-md);
+}
+.body {
+  font-size: var(--text-base);
+}
+.body p {
+  margin: 0;
+}
+.action {
+  margin-top: var(--space-2);
+}
