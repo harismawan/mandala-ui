@@ -12,6 +12,10 @@
   color: var(--text);
   box-shadow: var(--shadow-overlay);
 }
+/* Page CSS that sets display on an ancestor's children must not reveal the closed popover. */
+.popover:not(:popover-open) {
+  display: none;
+}
 .popover:popover-open {
   animation: popover-in var(--fast) var(--ease);
 }

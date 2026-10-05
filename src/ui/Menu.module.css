@@ -13,6 +13,10 @@
   color: var(--text);
   box-shadow: var(--shadow-overlay);
 }
+/* Page CSS that sets display on an ancestor's children must not reveal the closed popover. */
+.menu:not(:popover-open) {
+  display: none;
+}
 .menu:popover-open {
   animation: menu-in var(--fast) var(--ease);
 }
@@ -66,7 +70,9 @@
 .item[data-danger]:focus-visible {
   background: var(--danger-subtle);
 }
+/* inline-flex so a wrapped element icon sits centred in the row instead of on the text baseline. */
 .icon {
+  display: inline-flex;
   flex: none;
   color: var(--text-subtle);
 }
