@@ -31,13 +31,19 @@
 .iconOnly {
   width: var(--control);
   padding: 0;
+  flex: none;
+}
+.iconOnly svg {
+  flex: none;
 }
 .iconOnly[data-size="sm"] {
   width: var(--control-sm);
+  padding: 0;
 }
 .iconOnly[data-size="lg"] {
   width: var(--control-lg);
   height: var(--control-lg);
+  padding: 0;
 }
 .label {
   display: inline-block;
