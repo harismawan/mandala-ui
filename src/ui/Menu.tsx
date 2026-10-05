@@ -158,21 +158,22 @@ export function Menu({
         style={width ? { width } : undefined}
         onKeyDown={onMenuKey}
       >
-        {header && <div className={s.header}>{header}</div>}
-        {children}
-        {items && renderItems(items)}
-        {sections?.map((sec, i) =>
-          sec.heading ? (
-            <MenuGroup key={`${sec.heading}-${i}`} label={sec.heading}>
-              {renderItems(sec.items)}
-            </MenuGroup>
-          ) : (
-            <div key={i} role="group">
-              {i > 0 && <MenuSeparator />}
-              {renderItems(sec.items)}
-            </div>
-          ),
-        )}
+        {open && header && <div className={s.header}>{header}</div>}
+        {open && children}
+        {open && items && renderItems(items)}
+        {open &&
+          sections?.map((sec, i) =>
+            sec.heading ? (
+              <MenuGroup key={`${sec.heading}-${i}`} label={sec.heading}>
+                {renderItems(sec.items)}
+              </MenuGroup>
+            ) : (
+              <div key={i} role="group">
+                {i > 0 && <MenuSeparator />}
+                {renderItems(sec.items)}
+              </div>
+            ),
+          )}
       </div>
     </MenuCtx.Provider>
   );

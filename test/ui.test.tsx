@@ -51,6 +51,7 @@ test("Menu opens from the trigger, moves focus with arrows and closes on select"
   );
   const trigger = r.getByRole("button", { name: "More" });
   expect(trigger.getAttribute("aria-expanded")).toBe("false");
+  expect(r.queryAllByRole("menuitem", { hidden: true }).length).toBe(0); // items render only while open
   act(() => {
     fireEvent.click(trigger);
   });
@@ -155,12 +156,19 @@ test("toast shows and dismisses", async () => {
 
 test("Avatar initials and stable hues", () => {
   expect(initials("Achmad Fauzi Harismawan")).toBe("AH");
+  expect(initials("[RDL] Achmad Fauzi")).toBe("AF");
   expect(initials("admin")).toBe("A");
   expect(initials("  ")).toBe("?");
   expect(hueOf("admin")).toBe(hueOf("admin"));
   expect(hueOf("admin")).toBeLessThan(6);
   const r = render(<Avatar name="Dev User" id="dev" size={32} />);
   expect(r.container.textContent).toBe("DU");
+  expect(r.getByRole("img", { name: "Dev User" })).toBeTruthy();
+  const pic = render(<Avatar name="Pic" id="pic" src="/x.png" />);
+  act(() => {
+    fireEvent.error(pic.container.querySelector("img")!);
+  });
+  expect(pic.container.textContent).toBe("P"); // broken picture falls back to initials
 });
 
 test("Logo renders both products' marks and wordmarks", () => {
