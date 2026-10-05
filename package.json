@@ -1,6 +1,6 @@
 {
   "name": "@harismawan/mandala-ui",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Design system shared by Atlas and Loopline: tokens, dark mode, Inter, primitives, brand marks",
   "license": "UNLICENSED",
   "private": false,

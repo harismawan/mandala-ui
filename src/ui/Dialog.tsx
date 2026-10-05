@@ -42,7 +42,7 @@ export function Dialog({
         <h2 id={`${id}-t`} className={s.title}>
           {title}
         </h2>
-        <IconButton icon={X} label="Close" size="lg" onClick={onClose} tooltip={false} />
+        <IconButton icon={X} label="Close" onClick={onClose} tooltip={false} />
       </header>
       {description && (
         <p id={`${id}-d`} className={s.description}>
