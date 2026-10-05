@@ -62,7 +62,11 @@ export const IconButton = forwardRef<
       disabled={rest.disabled || rest.loading}
       {...stripButtonProps(rest)}
     >
-      {rest.loading ? <Spinner size={SPIN[size]} /> : <Icon icon={icon} size={ICON[size]} />}
+      {rest.loading ? (
+        <Spinner size={SPIN[size]} />
+      ) : (
+        <Icon icon={icon} size={ICON[size]} {...(size === "lg" ? { strokeWidth: 1.75 } : {})} />
+      )}
     </button>
   );
 });
