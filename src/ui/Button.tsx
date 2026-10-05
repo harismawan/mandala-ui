@@ -42,7 +42,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
 });
 
 // Icon-only button: the label is the accessible name and the tooltip.
-const ICON: Record<ButtonSize, number> = { sm: 16, md: 20, lg: 24 };
+const ICON = { sm: 16, md: 20, lg: 24 } as const;
+const SPIN = { sm: 14, md: 16, lg: 24 } as const;
 export const IconButton = forwardRef<
   HTMLButtonElement,
   Omit<ButtonProps, "icon" | "children"> & { icon: LucideIcon; label: string; tooltip?: boolean }
@@ -61,7 +62,7 @@ export const IconButton = forwardRef<
       disabled={rest.disabled || rest.loading}
       {...stripButtonProps(rest)}
     >
-      {rest.loading ? <Spinner size={ICON[size] - 4} /> : <Icon icon={icon} size={ICON[size]} />}
+      {rest.loading ? <Spinner size={SPIN[size]} /> : <Icon icon={icon} size={ICON[size]} />}
     </button>
   );
 });
