@@ -22,3 +22,4 @@ export { Dialog } from "./Dialog";
 export { toast, ToastHost, dismissToast } from "./Toast";
 export { TextField, Textarea, Select, Checkbox } from "./Field";
 export { Popover } from "./Popover";
+export { AuthLayout, AuthForm, AuthError, AuthField, PasswordField, authSubmitClass } from "./Auth";

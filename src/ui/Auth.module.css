@@ -1,0 +1,114 @@
+.page {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  min-height: 100vh;
+}
+.panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  padding: var(--space-12) var(--space-10);
+  background:
+    radial-gradient(120% 80% at 100% 0%, rgb(239 90 34 / 18%) 0%, transparent 60%),
+    linear-gradient(160deg, var(--teal-900) 0%, var(--teal-700) 100%);
+  color: var(--grey-0);
+}
+.tagline {
+  margin: var(--space-8) 0 0;
+  font-size: 32px;
+  line-height: 38px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  max-width: 14ch;
+}
+.sub {
+  margin: 0;
+  max-width: 36ch;
+  color: rgb(255 255 255 / 72%);
+  font-size: var(--text-md);
+  line-height: var(--leading-md);
+}
+.side {
+  display: grid;
+  place-items: center;
+  padding: var(--space-8) var(--space-6);
+  background: var(--surface);
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 380px;
+}
+.cardLogo {
+  display: none;
+  margin-bottom: var(--space-6);
+}
+.title {
+  margin: 0 0 var(--space-6);
+  font-size: var(--text-xl);
+  line-height: var(--leading-xl);
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-subtle);
+}
+.field input {
+  height: 40px;
+  font-size: var(--text-base);
+  font-weight: 400;
+  color: var(--text);
+}
+.passwordWrap {
+  position: relative;
+  display: flex;
+}
+.passwordWrap input {
+  width: 100%;
+  padding-right: 40px;
+}
+.eye {
+  position: absolute;
+  right: 6px;
+  top: 8px;
+}
+.submit {
+  height: 40px;
+  margin-top: var(--space-2);
+}
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius);
+  background: var(--danger-subtle);
+  color: var(--danger-text);
+}
+.error svg {
+  flex: none;
+  margin-top: 2px;
+}
+
+@media (max-width: 900px) {
+  .page {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .panel {
+    display: none;
+  }
+  .cardLogo {
+    display: block;
+  }
+}
