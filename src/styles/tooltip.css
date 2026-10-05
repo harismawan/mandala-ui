@@ -17,26 +17,30 @@
   line-height: 18px;
   white-space: nowrap;
   pointer-events: none;
-  opacity: 0;
-  transform: translate(-50%, 2px);
+  /* Hidden tooltips must not take part in layout: a transparent one still widens a scroll container. */
+  display: none;
+  opacity: 1;
+  transform: translate(-50%, 0);
   transition:
-    opacity var(--fast) var(--ease) 0s,
-    transform var(--fast) var(--ease) 0s;
+    display var(--fast) allow-discrete,
+    opacity var(--fast) var(--ease),
+    transform var(--fast) var(--ease);
 }
 [data-tooltip]:hover::after,
 [data-tooltip]:focus-visible::after {
-  opacity: 1;
-  transform: translate(-50%, 0);
+  display: block;
   transition-delay: 400ms;
+}
+@starting-style {
+  [data-tooltip]:hover::after,
+  [data-tooltip]:focus-visible::after {
+    opacity: 0;
+    transform: translate(-50%, 2px);
+  }
 }
 [data-tooltip][data-tooltip-side="bottom"]::after {
   bottom: auto;
   top: calc(100% + 6px);
-  transform: translate(-50%, -2px);
-}
-[data-tooltip][data-tooltip-side="bottom"]:hover::after,
-[data-tooltip][data-tooltip-side="bottom"]:focus-visible::after {
-  transform: translate(-50%, 0);
 }
 [data-tooltip][data-tooltip-side="right"]::after {
   left: calc(100% + 6px);
@@ -44,9 +48,15 @@
   top: 50%;
   transform: translate(0, -50%);
 }
-[data-tooltip][data-tooltip-side="right"]:hover::after,
-[data-tooltip][data-tooltip-side="right"]:focus-visible::after {
-  transform: translate(0, -50%);
+@starting-style {
+  [data-tooltip][data-tooltip-side="bottom"]:hover::after,
+  [data-tooltip][data-tooltip-side="bottom"]:focus-visible::after {
+    transform: translate(-50%, -2px);
+  }
+  [data-tooltip][data-tooltip-side="right"]:hover::after,
+  [data-tooltip][data-tooltip-side="right"]:focus-visible::after {
+    transform: translate(0, -50%);
+  }
 }
 [data-tooltip][disabled]::after,
 [data-tooltip][aria-expanded="true"]::after {
