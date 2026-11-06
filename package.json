@@ -1,6 +1,6 @@
 {
   "name": "@harismawan/mandala-ui",
-  "version": "0.1.11",
+  "version": "0.2.0",
   "description": "Design system shared by Atlas and Loopline: tokens, dark mode, Inter, primitives, brand marks",
   "license": "UNLICENSED",
   "private": false,
@@ -12,6 +12,8 @@
     "./tokens.css": "./src/styles/tokens.css",
     "./global.css": "./src/styles/global.css",
     "./fonts.css": "./src/styles/fonts.css",
+    "./tooltip.css": "./src/styles/tooltip.css",
+    "./ui/*.module.css": "./src/ui/*.module.css",
     "./favicon-atlas.svg": "./src/brand/favicon-atlas.svg",
     "./favicon-loopline.svg": "./src/brand/favicon-loopline.svg"
   },

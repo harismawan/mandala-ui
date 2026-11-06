@@ -33,8 +33,11 @@
   width: 36px;
   height: 36px;
 }
-.title {
+/* `.state` outranks rendered content's heading and paragraph rules (wiki.css), where WikiContent draws macros' empty
+   states; the title sets every type property those rules (and global.css's h2) set, so it looks the same anywhere. */
+.state .title {
   margin: 0;
+  letter-spacing: normal;
   color: var(--text);
   font-size: var(--text-md);
   line-height: var(--leading-md);
@@ -42,7 +45,7 @@
 .body {
   font-size: var(--text-base);
 }
-.body p {
+.state .body p {
   margin: 0;
 }
 .action {

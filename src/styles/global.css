@@ -221,6 +221,11 @@ dialog[open] {
 dialog::backdrop {
   background: var(--backdrop);
 }
+/* A modal dialog makes the page inert but does not stop it scrolling: a wheel over the backdrop, or over content
+   that does not scroll itself (the diagram zoom at 100%, ZoomableSvg.tsx), would chain to the page behind. */
+html:has(dialog:modal) {
+  overflow: hidden;
+}
 @keyframes dialog-in {
   from {
     opacity: 0;

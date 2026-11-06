@@ -17,7 +17,15 @@
     background-color var(--fast) var(--ease),
     color var(--fast) var(--ease),
     box-shadow var(--fast) var(--ease);
+  /* A flex item in someone else's row (a dialog header beside a long title, a toolbar) defaults to
+     min-width: auto and can shrink below its own icon's size instead of wrapping/overflowing the row. */
+  flex-shrink: 0;
 }
+
+.button svg {
+  flex-shrink: 0;
+}
+
 .button[data-size="sm"] {
   height: var(--control-sm);
   padding: 0 var(--space-2);
@@ -28,14 +36,17 @@
   padding: 0 var(--space-4);
   font-size: var(--text-md);
 }
+
 .iconOnly {
   width: var(--control);
   padding: 0;
+  /* Flex items default to min-width: auto, not their set width, so a tight flex row (a dialog header
+     next to a long title, the password field's wrapper) can shrink this well below its icon's own size
+     instead of respecting width above — pin both so the button, and the centered icon inside it, never
+     compress. */
   flex: none;
 }
-.iconOnly svg {
-  flex: none;
-}
+
 .iconOnly[data-size="sm"] {
   width: var(--control-sm);
   padding: 0;
@@ -45,24 +56,31 @@
   height: var(--control-lg);
   padding: 0;
 }
+
 .label {
   display: inline-block;
 }
-.button:hover:not(:disabled) {
+
+.button:hover:not(:disabled):not([aria-disabled="true"]) {
   background: var(--surface-pressed);
 }
-.button:active:not(:disabled) {
+
+.button:active:not(:disabled):not([aria-disabled="true"]) {
   background: var(--accent-subtle);
   color: var(--accent-text);
 }
+
 .button[aria-pressed="true"] {
   background: var(--accent-subtle);
   color: var(--accent-text);
 }
-.button:disabled {
+
+.button:disabled,
+.button[aria-disabled="true"] {
   cursor: not-allowed;
   opacity: 0.5;
 }
+
 .button[data-loading] {
   opacity: 0.8;
 }
@@ -71,8 +89,9 @@
   background: var(--accent);
   color: var(--text-on-brand);
 }
-.button[data-variant="primary"]:hover:not(:disabled),
-.button[data-variant="primary"]:active:not(:disabled) {
+
+.button[data-variant="primary"]:hover:not(:disabled):not([aria-disabled="true"]),
+.button[data-variant="primary"]:active:not(:disabled):not([aria-disabled="true"]) {
   background: var(--accent-hover);
   color: var(--text-on-brand);
 }
@@ -81,8 +100,9 @@
   background: var(--brand-strong);
   color: var(--text-on-brand);
 }
-.button[data-variant="brand"]:hover:not(:disabled),
-.button[data-variant="brand"]:active:not(:disabled) {
+
+.button[data-variant="brand"]:hover:not(:disabled):not([aria-disabled="true"]),
+.button[data-variant="brand"]:active:not(:disabled):not([aria-disabled="true"]) {
   background: var(--brand-strong-hover);
   color: var(--text-on-brand);
 }
@@ -91,10 +111,12 @@
   background: transparent;
   color: var(--text-subtle);
 }
-.button[data-variant="subtle"]:hover:not(:disabled) {
+
+.button[data-variant="subtle"]:hover:not(:disabled):not([aria-disabled="true"]) {
   background: var(--surface-hover);
   color: var(--text);
 }
+
 .button[data-variant="subtle"][aria-pressed="true"] {
   background: var(--accent-subtle);
   color: var(--accent-text);
@@ -104,8 +126,9 @@
   background: var(--danger);
   color: var(--text-on-brand);
 }
-.button[data-variant="danger"]:hover:not(:disabled),
-.button[data-variant="danger"]:active:not(:disabled) {
+
+.button[data-variant="danger"]:hover:not(:disabled):not([aria-disabled="true"]),
+.button[data-variant="danger"]:active:not(:disabled):not([aria-disabled="true"]) {
   background: var(--danger-hover);
   color: var(--text-on-brand);
 }
@@ -117,9 +140,15 @@
   color: var(--accent);
   font-weight: 500;
 }
-.button[data-variant="link"]:hover:not(:disabled) {
+
+.button[data-variant="link"]:hover:not(:disabled):not([aria-disabled="true"]) {
   background: transparent;
   color: var(--accent-hover);
   text-decoration: underline;
   text-underline-offset: 2px;
+}
+
+/* ButtonLink: an <a> drawn as a button keeps the button's look, not the global link underline. */
+.link:hover:not([data-variant="link"]) {
+  text-decoration: none;
 }

@@ -16,6 +16,34 @@
 .dialog[data-size="lg"] {
   width: 760px;
 }
+.dialog[data-size="xl"] {
+  width: 1040px;
+  max-width: min(96vw, 1040px);
+}
+/* Widest tier (diagram zoom): almost the viewport, and taller than the default cap. */
+.dialog[data-size="2xl"] {
+  width: min(96vw, 1400px);
+  max-width: min(96vw, 1400px);
+  max-height: 95vh;
+}
+.dialog[data-size="2xl"] .form {
+  max-height: 95vh;
+}
+@media (max-width: 720px) {
+  .dialog[data-size="xl"],
+  .dialog[data-size="2xl"] {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    border-radius: 0;
+  }
+  .dialog[data-size="xl"] .form,
+  .dialog[data-size="2xl"] .form {
+    height: 100dvh;
+    max-height: 100dvh;
+  }
+}
 .form {
   display: flex;
   flex-direction: column;
@@ -30,6 +58,10 @@
 }
 .title {
   margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: var(--text-lg);
   line-height: var(--leading-lg);
 }
@@ -56,4 +88,7 @@
 .footer:first-child,
 .body + .footer {
   padding-top: var(--space-2);
+}
+.footer:empty {
+  display: none;
 }

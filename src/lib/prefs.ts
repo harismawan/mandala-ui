@@ -42,3 +42,14 @@ export function useFlag(key: string, fallback = false): [boolean, (next: boolean
   const set = useCallback((next: boolean) => writePref(key, next ? "1" : "0"), [key]);
   return [value === null ? fallback : value === "1", set];
 }
+
+/** A string preference (null in storage means `fallback`). */
+export function usePref(key: string, fallback: string): [string, (next: string | null) => void] {
+  const value = useSyncExternalStore(
+    subscribe,
+    () => read(key),
+    () => null,
+  );
+  const set = useCallback((next: string | null) => writePref(key, next), [key]);
+  return [value ?? fallback, set];
+}

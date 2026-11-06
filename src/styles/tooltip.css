@@ -1,13 +1,19 @@
-/* CSS tooltip: any element with data-tooltip shows it on hover/focus after a short delay. Pair with aria-label. */
-[data-tooltip] {
-  position: relative;
-}
-[data-tooltip]::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  left: 50%;
-  bottom: calc(100% + 6px);
-  z-index: 40;
+/* Portaled tooltip host (see tooltip.ts). A single fixed-position element lives on <body> and shows the
+   text of whichever [data-tooltip] element is hovered or focused. Fixed positioning is the point: unlike
+   the old CSS ::after bubble, no ancestor's overflow (a scrollable menu, a clipped/rounded block, a
+   dialog body) can cut it off. Attribute contract is unchanged: [data-tooltip] holds the text and
+   [data-tooltip-side] (top default, bottom, right, left) is a preference, flipped when it would leave
+   the viewport. Pair with aria-label; the host itself is aria-hidden. The host is a manual popover (top layer,
+   above dialogs and other popovers), so the UA popover box (inset, margin, border) is reset here. */
+.mandala-tooltip {
+  position: fixed;
+  inset: auto;
+  top: 0;
+  left: 0;
+  margin: 0;
+  border: 0;
+  overflow: visible;
+  max-width: 320px;
   padding: 3px 8px;
   border-radius: var(--radius-sm);
   background: var(--surface-inverse);
@@ -17,48 +23,14 @@
   line-height: 18px;
   white-space: nowrap;
   pointer-events: none;
-  /* Hidden tooltips must not take part in layout: a transparent one still widens a scroll container. */
-  display: none;
+  opacity: 0;
+  transition: opacity var(--fast) var(--ease);
+}
+.mandala-tooltip[data-visible] {
   opacity: 1;
-  transform: translate(-50%, 0);
-  transition:
-    display var(--fast) allow-discrete,
-    opacity var(--fast) var(--ease),
-    transform var(--fast) var(--ease);
-}
-[data-tooltip]:hover::after,
-[data-tooltip]:focus-visible::after {
-  display: block;
-  transition-delay: 400ms;
 }
 @starting-style {
-  [data-tooltip]:hover::after,
-  [data-tooltip]:focus-visible::after {
+  .mandala-tooltip[data-visible] {
     opacity: 0;
-    transform: translate(-50%, 2px);
   }
-}
-[data-tooltip][data-tooltip-side="bottom"]::after {
-  bottom: auto;
-  top: calc(100% + 6px);
-}
-[data-tooltip][data-tooltip-side="right"]::after {
-  left: calc(100% + 6px);
-  bottom: auto;
-  top: 50%;
-  transform: translate(0, -50%);
-}
-@starting-style {
-  [data-tooltip][data-tooltip-side="bottom"]:hover::after,
-  [data-tooltip][data-tooltip-side="bottom"]:focus-visible::after {
-    transform: translate(-50%, -2px);
-  }
-  [data-tooltip][data-tooltip-side="right"]:hover::after,
-  [data-tooltip][data-tooltip-side="right"]:focus-visible::after {
-    transform: translate(0, -50%);
-  }
-}
-[data-tooltip][disabled]::after,
-[data-tooltip][aria-expanded="true"]::after {
-  display: none;
 }

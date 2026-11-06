@@ -1,7 +1,26 @@
-// UTC like the server-rendered view it replaces; stock formats in the viewer's time zone (not stored per user here).
+// Dates show in the viewer's time zone (stock confluence.user.time.zone, set from the settings at load); UTC until
+// then and for the server-rendered view. Stock's list carries four Java short ids that Intl does not know.
+const JAVA_ZONES: Record<string, string> = {
+  HST: "Pacific/Honolulu",
+  AST: "America/Anchorage",
+  ECT: "Europe/Paris",
+  GMT: "Etc/GMT",
+};
+let zone = "UTC";
+export function setTimeZone(id?: string) {
+  const candidate = (id && JAVA_ZONES[id]) || id || "UTC";
+  try {
+    new Intl.DateTimeFormat("en-GB", { timeZone: candidate });
+    zone = candidate;
+  } catch {
+    zone = "UTC";
+  }
+}
+export const timeZone = () => zone;
+
 export const day = (iso?: string) =>
   iso
-    ? new Date(iso).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric", timeZone: "UTC" })
+    ? new Date(iso).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric", timeZone: zone })
     : "";
 
 // Full timestamp for tooltips beside a relative time.
@@ -13,7 +32,7 @@ export const dateTime = (iso?: string) =>
         year: "numeric",
         hour: "2-digit",
         minute: "2-digit",
-        timeZone: "UTC",
+        timeZone: zone,
       })
     : "";
 

@@ -48,12 +48,14 @@ export function isEditableTarget(el: EventTarget | null): boolean {
   return !!h.closest?.("[contenteditable=''],[contenteditable='true'],[role='textbox']");
 }
 
-// Global shortcuts for the shell; ignored while typing, inside an open dialog, and when a modifier is held.
-export function useShortcuts(handlers: Record<string, () => void>) {
+// Global shortcuts for the shell; ignored while typing, inside an open dialog, and when a modifier is held. Off when
+// the viewer turned keyboard shortcuts off (stock confluence.user.keyboard.shortcuts.disabled).
+export function useShortcuts(handlers: Record<string, () => void>, enabled = true) {
   const latest = useRef(handlers);
   latest.current = handlers;
   const keys = Object.keys(handlers).sort().join("|");
   useEffect(() => {
+    if (!enabled) return;
     const matcher = new ShortcutMatcher(keys.split("|").filter(Boolean));
     const onKey = (e: KeyboardEvent) => {
       if (e.defaultPrevented || isEditableTarget(e.target)) return;
@@ -65,5 +67,5 @@ export function useShortcuts(handlers: Record<string, () => void>) {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [keys]);
+  }, [keys, enabled]);
 }

@@ -13,6 +13,27 @@
 .input {
   width: 100%;
 }
+.selectWrap {
+  position: relative;
+  display: flex;
+  min-width: 0;
+}
+/* Room on the right for the chevron: its 16px plus a --space-2 gap on each side. */
+.select {
+  appearance: none;
+  padding-right: var(--space-8);
+}
+.chevron {
+  position: absolute;
+  top: 50%;
+  right: var(--space-2);
+  transform: translateY(-50%);
+  color: var(--text-subtle);
+  pointer-events: none;
+}
+.select:disabled + .chevron {
+  color: var(--text-muted);
+}
 .field[data-invalid] .input {
   border-color: var(--danger);
 }
@@ -41,4 +62,22 @@
 .check > span {
   display: flex;
   flex-direction: column;
+}
+/* ChoiceGroup: a bare fieldset, its legend in the field label's style, options stacked like a form's fields. */
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.choices > legend {
+  margin-bottom: var(--space-1);
+  padding: 0;
+}
+/* Sub-options sit under their option's label: the checkbox's width plus its gap. */
+.choices[data-nested] {
+  padding-left: var(--space-6);
 }

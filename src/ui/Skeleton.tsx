@@ -17,6 +17,31 @@ export function Skeleton({ lines = 3, title, className }: { lines?: number; titl
   );
 }
 
+// Menu-item shaped rows (MenuItem geometry): a leading icon or avatar, a label and an optional description.
+export function SkeletonItems({
+  rows = 4,
+  lead = 16,
+  description = true,
+}: {
+  rows?: number;
+  lead?: number;
+  description?: boolean;
+}) {
+  return (
+    <div className={s.items} role="status" aria-label="Loading" aria-busy="true">
+      {Array.from({ length: rows }, (_, i) => (
+        <div key={i} className={s.item} data-description={description || undefined}>
+          <div className={s.lead} style={{ width: lead, height: lead }} />
+          <div className={s.rowLines}>
+            <div className={s.line} style={{ width: `${[64, 48, 76, 56, 70][i % 5]}%` }} />
+            {description && <div className={s.line} data-thin style={{ width: "30%" }} />}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export function SkeletonRows({ rows = 5 }: { rows?: number }) {
   return (
     <div className={s.skeleton} role="status" aria-label="Loading" aria-busy="true">

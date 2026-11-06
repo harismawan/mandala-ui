@@ -1,8 +1,15 @@
-import { useId, useRef, type KeyboardEvent, type ReactNode } from "react";
+import { Fragment, useId, useRef, type KeyboardEvent, type ReactNode } from "react";
 import { Icon, type LucideIcon } from "./Icon";
 import s from "./Tabs.module.css";
 
-export type Tab<K extends string = string> = { key: K; label: ReactNode; icon?: LucideIcon; count?: number };
+// `group` labels a run of tabs in a vertical list (a heading above the first tab of each group).
+export type Tab<K extends string = string> = {
+  key: K;
+  label: ReactNode;
+  icon?: LucideIcon;
+  count?: number;
+  group?: string;
+};
 
 // Controlled tab list; the owner decides where the value lives (state or the URL). Arrow keys move and select.
 export function Tabs<K extends string>({
@@ -49,25 +56,32 @@ export function Tabs<K extends string>({
         className={s.list}
         onKeyDown={onKey}
       >
-        {tabs.map((t) => {
+        {tabs.map((t, i) => {
           const selected = t.key === value;
+          const heading = vertical && t.group && t.group !== tabs[i - 1]?.group;
           return (
-            <button
-              key={t.key}
-              type="button"
-              role="tab"
-              id={`${id}-${t.key}`}
-              data-key={t.key}
-              aria-selected={selected}
-              aria-controls={`${id}-panel`}
-              tabIndex={selected ? 0 : -1}
-              className={s.tab}
-              onClick={() => onChange(t.key)}
-            >
-              {t.icon && <Icon icon={t.icon} size={16} />}
-              <span>{t.label}</span>
-              {t.count !== undefined && <span className={s.count}>{t.count}</span>}
-            </button>
+            <Fragment key={t.key}>
+              {heading && (
+                <div role="presentation" className={s.group}>
+                  {t.group}
+                </div>
+              )}
+              <button
+                type="button"
+                role="tab"
+                id={`${id}-${t.key}`}
+                data-key={t.key}
+                aria-selected={selected}
+                aria-controls={`${id}-panel`}
+                tabIndex={selected ? 0 : -1}
+                className={s.tab}
+                onClick={() => onChange(t.key)}
+              >
+                {t.icon && <Icon icon={t.icon} size={16} />}
+                <span>{t.label}</span>
+                {t.count !== undefined && <span className={s.count}>{t.count}</span>}
+              </button>
+            </Fragment>
           );
         })}
       </div>

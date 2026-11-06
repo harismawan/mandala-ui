@@ -20,6 +20,12 @@ export function dismissToast(id: number) {
   emit();
 }
 
+// Every toast at once (a page's teardown, and tests that must not leak toasts into the next).
+export function dismissAllToasts() {
+  items = [];
+  emit();
+}
+
 function push(tone: ToastTone, title: string, opts?: { body?: ReactNode; action?: ReactNode; duration?: number }) {
   const id = ++seq;
   items = [...items, { id, tone, title, body: opts?.body, action: opts?.action }];

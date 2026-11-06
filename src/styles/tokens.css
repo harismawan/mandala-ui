@@ -44,6 +44,7 @@
   --topbar: 48px;
   --sidebar: 256px;
   --rail: 280px;
+  --rail-wide: 400px;
   --radius-sm: 4px;
   --radius: 6px;
   --radius-lg: 8px;
@@ -105,6 +106,12 @@
   --red-700: #ae2e24;
   --red-300: #ff7a6e;
 
+  /* Dark surface and text, defined in every theme: both dark remaps below use them, and a product
+     can map inline page colours against them whichever theme is showing. */
+  --dark-surface: #1b2224;
+  --dark-surface-raised: #232c2f;
+  --dark-text: #c7d1d4;
+
   /* Semantic roles (light). */
   --surface: var(--grey-0);
   --surface-raised: var(--grey-0);
@@ -155,14 +162,6 @@
   --backdrop: rgb(0 38 46 / 55%);
   --selection: var(--teal-100);
 
-  /* Categorical chart series (gadgets, pies, bars); the same six in both products. */
-  --chart-1: var(--teal-600);
-  --chart-2: var(--orange-600);
-  --chart-3: var(--amber-600);
-  --chart-4: var(--green-600);
-  --chart-5: #6f5bd1;
-  --chart-6: var(--grey-500);
-
   /* Status category lozenges (Jira-style): new, indeterminate, done. */
   --lozenge-new-bg: var(--grey-150);
   --lozenge-new-fg: var(--grey-700);
@@ -170,13 +169,24 @@
   --lozenge-indeterminate-fg: var(--teal-900);
   --lozenge-done-bg: var(--green-100);
   --lozenge-done-fg: var(--green-700);
+
+  /* Categorical chart series, in fixed order (validated for lightness, chroma, colour-blind and normal-vision
+     separation on the light and dark surfaces); --chart-other is the folded remainder. Server-drawn charts may
+     carry the light values as fill attributes for exports. */
+  --chart-1: #2a78d6;
+  --chart-2: #eb6834;
+  --chart-3: #1baf7a;
+  --chart-4: #eda100;
+  --chart-5: #e87ba4;
+  --chart-6: #008300;
+  --chart-other: var(--grey-400);
 }
 
 /* Dark remap. Applied by the manual toggle, and by the system preference unless light was chosen explicitly. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --surface: #1b2224;
-    --surface-raised: #232c2f;
+    --surface: var(--dark-surface);
+    --surface-raised: var(--dark-surface-raised);
     --surface-sunken: #161c1e;
     --surface-overlay: #2a3437;
     --surface-hover: rgb(255 255 255 / 6%);
@@ -184,11 +194,11 @@
     --surface-selected: #0f3338;
     --surface-inverse: var(--grey-50);
 
-    --text: #c7d1d4;
+    --text: var(--dark-text);
     --text-subtle: #9fb1b6;
     --text-muted: #8aa0a6;
-    --text-inverse: #1b2224;
-    --text-on-brand: #1b2224;
+    --text-inverse: var(--dark-surface);
+    --text-on-brand: var(--dark-surface);
 
     --border: rgb(255 255 255 / 12%);
     --border-strong: rgb(255 255 255 / 22%);
@@ -223,31 +233,25 @@
     --backdrop: rgb(0 0 0 / 65%);
     --selection: #144249;
 
-    --chart-1: var(--teal-300);
-    --chart-2: var(--orange-400);
-    --chart-3: var(--amber-300);
-    --chart-4: var(--green-300);
-    --chart-5: #a394ff;
-    --chart-6: var(--grey-400);
-
-    --chart-1: var(--teal-300);
-    --chart-2: var(--orange-400);
-    --chart-3: var(--amber-300);
-    --chart-4: var(--green-300);
-    --chart-5: #a394ff;
-    --chart-6: var(--grey-400);
-
     --lozenge-new-bg: #2e3a3e;
     --lozenge-new-fg: #b6c4c8;
     --lozenge-indeterminate-bg: #0f3338;
     --lozenge-indeterminate-fg: var(--teal-200);
     --lozenge-done-bg: #12301f;
     --lozenge-done-fg: var(--green-300);
+
+    --chart-1: #3987e5;
+    --chart-2: #d95926;
+    --chart-3: #199e70;
+    --chart-4: #c98500;
+    --chart-5: #d55181;
+    --chart-6: #008300;
+    --chart-other: var(--grey-500);
   }
 }
 :root[data-theme="dark"] {
-  --surface: #1b2224;
-  --surface-raised: #232c2f;
+  --surface: var(--dark-surface);
+  --surface-raised: var(--dark-surface-raised);
   --surface-sunken: #161c1e;
   --surface-overlay: #2a3437;
   --surface-hover: rgb(255 255 255 / 6%);
@@ -255,11 +259,11 @@
   --surface-selected: #0f3338;
   --surface-inverse: var(--grey-50);
 
-  --text: #c7d1d4;
+  --text: var(--dark-text);
   --text-subtle: #9fb1b6;
   --text-muted: #8aa0a6;
-  --text-inverse: #1b2224;
-  --text-on-brand: #1b2224;
+  --text-inverse: var(--dark-surface);
+  --text-on-brand: var(--dark-surface);
 
   --border: rgb(255 255 255 / 12%);
   --border-strong: rgb(255 255 255 / 22%);
@@ -300,6 +304,14 @@
   --lozenge-indeterminate-fg: var(--teal-200);
   --lozenge-done-bg: #12301f;
   --lozenge-done-fg: var(--green-300);
+
+  --chart-1: #3987e5;
+  --chart-2: #d95926;
+  --chart-3: #199e70;
+  --chart-4: #c98500;
+  --chart-5: #d55181;
+  --chart-6: #008300;
+  --chart-other: var(--grey-500);
 }
 :root[data-theme="light"] {
   color-scheme: light;
