@@ -15,7 +15,8 @@ import { ChevronDown } from "lucide-react";
 import { Icon, type LucideIcon } from "./Icon";
 import s from "./Menu.module.css";
 
-type Ctx = { close: () => void };
+// `open`: items that load what they show (a permission check) wait for the menu to open.
+type Ctx = { close: () => void; open: boolean };
 const MenuCtx = createContext<Ctx | null>(null);
 
 export type MenuPlacement = "bottom-start" | "bottom-end" | "top-start" | "top-end" | "right-start";
@@ -60,6 +61,7 @@ export function Menu({
   placement = "bottom-start",
   width,
   onOpenChange,
+  inline = false,
 }: {
   trigger: (props: TriggerProps, open: boolean) => ReactNode;
   children?: ReactNode;
@@ -70,6 +72,8 @@ export function Menu({
   placement?: MenuPlacement;
   width?: number;
   onOpenChange?: (open: boolean) => void;
+  /** A plain layer instead of the native Popover API, for a menu opened from inside another popover. */
+  inline?: boolean;
 }) {
   const id = useId();
   const [open, setOpen] = useState(false);
@@ -77,14 +81,24 @@ export function Menu({
   const pop = useRef<HTMLDivElement>(null);
   const focusOnOpen = useRef<"first" | "last" | null>(null);
 
-  const show = useCallback((focus: "first" | "last" | null) => {
-    focusOnOpen.current = focus;
-    pop.current?.showPopover();
-  }, []);
-  const close = useCallback(() => pop.current?.hidePopover(), []);
+  const show = useCallback(
+    (focus: "first" | "last" | null) => {
+      focusOnOpen.current = focus;
+      if (inline) setOpen(true);
+      else pop.current?.showPopover();
+    },
+    [inline],
+  );
+  const close = useCallback(() => {
+    if (!inline) return pop.current?.hidePopover();
+    // As the native toggle handler does: focus inside the closing menu goes back to the trigger, not to <body>.
+    if (document.activeElement && pop.current?.contains(document.activeElement)) triggerEl.current?.focus();
+    setOpen(false);
+  }, [inline]);
 
-  // The popover's own toggle event is the source of truth (light dismiss and Esc hide it without us).
+  // Native popover mode: its own toggle event is the source of truth (light dismiss and Esc hide it without us).
   useEffect(() => {
+    if (inline) return;
     const el = pop.current;
     if (!el) return;
     const onToggle = (e: Event) => {
@@ -95,7 +109,22 @@ export function Menu({
     };
     el.addEventListener("toggle", onToggle);
     return () => el.removeEventListener("toggle", onToggle);
-  }, [onOpenChange]);
+  }, [inline, onOpenChange]);
+
+  // Inline mode (a plain layer, not a native popover): report open state and dismiss on an outside press.
+  useEffect(() => {
+    if (!inline) return;
+    onOpenChange?.(open);
+  }, [inline, open, onOpenChange]);
+  useEffect(() => {
+    if (!inline || !open) return;
+    const onDown = (e: PointerEvent) => {
+      const t = e.target as Node | null;
+      if (!pop.current?.contains(t) && !triggerEl.current?.contains(t)) setOpen(false);
+    };
+    document.addEventListener("pointerdown", onDown, true);
+    return () => document.removeEventListener("pointerdown", onDown, true);
+  }, [inline, open]);
 
   useLayoutEffect(() => {
     if (!open || !pop.current || !triggerEl.current) return;
@@ -106,12 +135,25 @@ export function Menu({
   }, [open, placement]);
 
   const onTriggerKey = (e: KeyboardEvent) => {
-    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+    if (inline && open && e.key === "Escape") {
+      e.preventDefault();
+      e.stopPropagation();
+      setOpen(false);
+    } else if (e.key === "ArrowDown" || e.key === "ArrowUp") {
       e.preventDefault();
       show(e.key === "ArrowDown" ? "first" : "last");
     }
   };
   const onMenuKey = (e: KeyboardEvent<HTMLDivElement>) => {
+    // Inline mode has no native Esc: close this menu only. preventDefault keeps the keydown from becoming a close
+    // request for the popover this menu sits in, so Esc peels one layer at a time.
+    if (inline && e.key === "Escape") {
+      e.preventDefault();
+      e.stopPropagation();
+      triggerEl.current?.focus();
+      setOpen(false);
+      return;
+    }
     const items = itemsOf(e.currentTarget);
     if (!items.length) return;
     const i = items.indexOf(document.activeElement as HTMLElement);
@@ -133,8 +175,32 @@ export function Menu({
     }
   };
 
+  // `children` stay mounted while closed: an item may own a dialog that outlives the menu (a delete confirmation), and
+  // an item that loads what it shows reads `open` from the context. The data form (`header`, `items`, `sections`)
+  // holds nothing of its own and renders only while open, so a closed data menu's markup holds no items.
+  const body = (
+    <>
+      {open && header && <div className={s.header}>{header}</div>}
+      {children}
+      {open && items && renderItems(items)}
+      {open &&
+        sections?.map((sec, i) =>
+          sec.heading ? (
+            <MenuGroup key={`${sec.heading}-${i}`} label={sec.heading}>
+              {renderItems(sec.items)}
+            </MenuGroup>
+          ) : (
+            <div key={i} role="group">
+              {i > 0 && <MenuSeparator />}
+              {renderItems(sec.items)}
+            </div>
+          ),
+        )}
+    </>
+  );
+
   return (
-    <MenuCtx.Provider value={{ close }}>
+    <MenuCtx.Provider value={{ close, open }}>
       {trigger(
         {
           ref: (el) => {
@@ -148,33 +214,34 @@ export function Menu({
         },
         open,
       )}
-      <div
-        ref={pop}
-        id={id}
-        popover="auto"
-        role="menu"
-        aria-label={label}
-        className={s.menu}
-        style={width ? { width } : undefined}
-        onKeyDown={onMenuKey}
-      >
-        {open && header && <div className={s.header}>{header}</div>}
-        {open && children}
-        {open && items && renderItems(items)}
-        {open &&
-          sections?.map((sec, i) =>
-            sec.heading ? (
-              <MenuGroup key={`${sec.heading}-${i}`} label={sec.heading}>
-                {renderItems(sec.items)}
-              </MenuGroup>
-            ) : (
-              <div key={i} role="group">
-                {i > 0 && <MenuSeparator />}
-                {renderItems(sec.items)}
-              </div>
-            ),
-          )}
-      </div>
+      {inline ? (
+        open && (
+          <div
+            ref={pop}
+            id={id}
+            role="menu"
+            aria-label={label}
+            className={s.menu}
+            style={width ? { width } : undefined}
+            onKeyDown={onMenuKey}
+          >
+            {body}
+          </div>
+        )
+      ) : (
+        <div
+          ref={pop}
+          id={id}
+          popover="auto"
+          role="menu"
+          aria-label={label}
+          className={s.menu}
+          style={width ? { width } : undefined}
+          onKeyDown={onMenuKey}
+        >
+          {body}
+        </div>
+      )}
     </MenuCtx.Provider>
   );
 }
@@ -324,7 +391,10 @@ function itemsOf(root: HTMLElement) {
 
 const GAP = 4;
 // Fixed-position placement in the top layer, flipped when the preferred side runs out of viewport.
-export function positionPopover(pop: HTMLElement, anchor: HTMLElement, placement: MenuPlacement) {
+/** Anything with a viewport rectangle: an element, or a virtual anchor such as a text selection. */
+export type PopoverAnchor = { getBoundingClientRect(): { top: number; left: number; right: number; bottom: number } };
+
+export function positionPopover(pop: HTMLElement, anchor: PopoverAnchor, placement: MenuPlacement) {
   const a = anchor.getBoundingClientRect();
   const w = pop.offsetWidth;
   const h = pop.offsetHeight;

@@ -13,8 +13,9 @@
   color: var(--text);
   box-shadow: var(--shadow-overlay);
 }
-/* Page CSS that sets display on an ancestor's children must not reveal the closed popover. */
-.menu:not(:popover-open) {
+/* Page CSS that sets display on an ancestor's children must not reveal the closed popover. Only a native popover:
+   an inline menu (no popover attribute) is mounted only while open. */
+.menu[popover]:not(:popover-open) {
   display: none;
 }
 .menu:popover-open {

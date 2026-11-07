@@ -1,4 +1,4 @@
-import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from "react";
+import { forwardRef, type AnchorHTMLAttributes, type ButtonHTMLAttributes, type ReactNode } from "react";
 import { Icon, type LucideIcon } from "./Icon";
 import { Spinner } from "./Spinner";
 import s from "./Button.module.css";
@@ -20,6 +20,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
   { variant = "default", size = "md", icon, iconAfter, loading, pressed, className, children, disabled, type, ...rest },
   ref,
 ) {
+  // A step below IconButton's 16/20: beside a text label the icon sits at the text's scale, not the
+  // icon-only button's.
   const iconSize = size === "sm" ? 14 : 16;
   return (
     <button
@@ -38,6 +40,40 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       {children && <span className={s.label}>{children}</span>}
       {iconAfter && <Icon icon={iconAfter} size={iconSize} />}
     </button>
+  );
+});
+
+/** A link drawn as a Button (downloads, other pages): one focusable `<a>`, never a button inside a link. */
+export const ButtonLink = forwardRef<
+  HTMLAnchorElement,
+  AnchorHTMLAttributes<HTMLAnchorElement> & {
+    href: string;
+    variant?: ButtonVariant;
+    size?: ButtonSize;
+    icon?: LucideIcon;
+    iconAfter?: LucideIcon;
+    disabled?: boolean;
+  }
+>(function ButtonLink(
+  { variant = "default", size = "md", icon, iconAfter, disabled, className, children, href, onClick, ...rest },
+  ref,
+) {
+  const iconSize = size === "sm" ? 14 : 16;
+  return (
+    <a
+      ref={ref}
+      href={disabled ? undefined : href}
+      className={[s.button, s.link, className].filter(Boolean).join(" ")}
+      data-variant={variant}
+      data-size={size}
+      aria-disabled={disabled || undefined}
+      onClick={disabled ? (e) => e.preventDefault() : onClick}
+      {...rest}
+    >
+      {icon && <Icon icon={icon} size={iconSize} />}
+      {children && <span className={s.label}>{children}</span>}
+      {iconAfter && <Icon icon={iconAfter} size={iconSize} />}
+    </a>
   );
 });
 

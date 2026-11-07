@@ -92,6 +92,16 @@ Moved from Atlas with these changes so nothing depends on product types:
 | `Field` | `TextField`, `Textarea`, `Select`, `Checkbox` unchanged. |
 | `Skeleton`, `Spinner`, `Popover`, `Tabs`, `Button`, `IconButton`, `Icon` | unchanged. |
 
+v0.2.0 (2026-11-06) brings the package level with Atlas `main` (everything Atlas fixed after the extraction) and
+moves in the primitives Atlas added since: `Tag`/`TagList`, `Banner`, `OptionCard`/`OptionGrid`, `SidePanel`,
+`Slider`, `ButtonLink`, `DialogFooter`, `AnchoredPopover`, `SkeletonItems`, `Radio`/`ChoiceGroup`/`FieldShell`,
+`dismissAllToasts`, `positionPopover`, Menu `inline`, Tabs `group`, Dialog `xl`/`2xl`, and the portaled tooltip
+(`ui/tooltip.ts`, host class `mandala-tooltip`) replacing the CSS `::after` bubble. Tokens take Atlas's validated chart
+palette (`--chart-1..6`, `--chart-other`), `--dark-surface*`/`--dark-text` and `--rail-wide`; `--sidebar` stays 256px
+(Atlas overrides it). The Loopline additions (Button `lg`, Tabs `pill`, Menu data form, `Auth`) stay. Menu keeps
+`children` mounted while closed, as Atlas does (an item may own a dialog that outlives the menu); only the data form
+renders while open. An item that loads what it shows reads `open` from `useMenu()`.
+
 `lib/confirm.tsx`: `useConfirmDialog(verb)` returns `[node, confirm(message, action)]` on top of `Dialog`
 (Loopline's `useConfirm` shape, so its callers only change the import).
 
