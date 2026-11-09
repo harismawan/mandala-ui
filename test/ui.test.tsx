@@ -710,3 +710,23 @@ test("ChoiceGroup: a legend over Radio options, disabled as a whole, nested grou
   expect((r.getByRole("group", { name: "Locked" }) as HTMLFieldSetElement).disabled).toBe(true);
   expect(r.getByRole("radio", { name: "C" }).matches(":disabled")).toBe(true);
 });
+
+test("a Dialog renders in place when there is no document (server rendering)", async () => {
+  const { renderToStaticMarkup } = await import("react-dom/server");
+  const saved = globalThis.document;
+  // @ts-expect-error: server rendering has no document
+  delete globalThis.document;
+  try {
+    const html = renderToStaticMarkup(
+      <section>
+        <Dialog open={false} onClose={() => {}} title="Delete filter?">
+          <p>Gone for good</p>
+        </Dialog>
+      </section>,
+    );
+    expect(html).toContain("<section><dialog");
+    expect(html).toContain("Delete filter?");
+  } finally {
+    globalThis.document = saved;
+  }
+});

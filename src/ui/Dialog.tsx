@@ -80,7 +80,7 @@ export function Dialog({
       </footer>
     </>
   );
-  return createPortal(
+  const dialog = (
     <dialog
       ref={ref}
       className={[s.dialog, className].filter(Boolean).join(" ")}
@@ -115,7 +115,9 @@ export function Dialog({
       ) : (
         <div className={s.form}>{body}</div>
       )}
-    </dialog>,
-    document.body, // never nested in the caller's DOM (a <form> inside the editor's <form> is invalid HTML)
+    </dialog>
   );
+  // Never nested in the caller's DOM (a <form> inside the editor's <form> is invalid HTML). Server rendering has no
+  // document to portal into: the closed dialog renders in place there.
+  return typeof document === "undefined" ? dialog : createPortal(dialog, document.body);
 }
